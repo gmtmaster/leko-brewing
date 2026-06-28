@@ -55,6 +55,33 @@ a {
   transform: translateY(48px);
 }
 
+.ingredients-grid,
+.beer-grid,
+.brewery-stats {
+  perspective: 1200px;
+}
+
+.tilt-card {
+  will-change: transform;
+}
+
+.product-can-stage,
+.showcase-can,
+.transition-can,
+.lineup-can-shell {
+  will-change: transform;
+}
+
+.premium-reveal,
+.brewery-stat,
+.ingredient-card,
+.beer-card,
+.cta-reveal,
+.showcase-can,
+.transition-can {
+  opacity: 0;
+}
+
 .cinematic-grain::after {
   content: "";
   pointer-events: none;
@@ -93,5 +120,18 @@ a {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .section-reveal,
+  .premium-reveal,
+  .brewery-stat,
+  .ingredient-card,
+  .beer-card,
+  .cta-reveal,
+  .showcase-can,
+  .transition-can {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
