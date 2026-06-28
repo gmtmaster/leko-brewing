@@ -8,7 +8,10 @@ import * as THREE from "three";
 type ProductCanCanvasProps = {
   className?: string;
   cameraZ?: number;
+  cameraY?: number;
+  fov?: number;
   scale?: number;
+  position?: [number, number, number];
   rotation?: [number, number, number];
   idleSpeed?: number;
   reducedMotion?: boolean;
@@ -126,10 +129,11 @@ function buildLabelBandGeometry(sourceGeometry: THREE.BufferGeometry) {
 
 function ProductCan({
   scale = 1,
+  position = [0, 0, 0],
   rotation = [0.04, Math.PI, 0],
   idleSpeed = 0.18,
   reducedMotion = false
-}: Omit<ProductCanCanvasProps, "className" | "cameraZ">) {
+}: Omit<ProductCanCanvasProps, "className" | "cameraZ" | "cameraY" | "fov">) {
   const group = useRef<THREE.Group>(null);
   const gltf = useGLTF("/models/beer-can.glb");
   const labelTexture = useTexture("/textures/golden-hour-label.png");
@@ -188,7 +192,7 @@ function ProductCan({
   });
 
   return (
-    <group ref={group} scale={scale} rotation={rotation}>
+    <group ref={group} scale={scale} position={position} rotation={rotation}>
       <primitive object={canScene} />
     </group>
   );
@@ -196,8 +200,11 @@ function ProductCan({
 
 export function ProductCanCanvas({
   className = "",
-  cameraZ = 4.8,
+  cameraZ = 5.4,
+  cameraY = 0.18,
+  fov = 31,
   scale = 1,
+  position,
   rotation,
   idleSpeed,
   reducedMotion
@@ -217,7 +224,7 @@ export function ProductCanCanvas({
       className={className}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={{ position: [0, 0.16, cameraZ], fov: 34 }}
+      camera={{ position: [0, cameraY, cameraZ], fov }}
       onCreated={({ gl }) => {
         gl.outputColorSpace = THREE.SRGBColorSpace;
         gl.toneMapping = THREE.ACESFilmicToneMapping;
@@ -231,6 +238,7 @@ export function ProductCanCanvas({
       <Suspense fallback={null}>
         <ProductCan
           scale={scale}
+          position={position}
           rotation={rotation}
           idleSpeed={idleSpeed}
           reducedMotion={reducedMotion || prefersReducedMotion}

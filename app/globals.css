@@ -55,9 +55,7 @@ a {
   transform: translateY(48px);
 }
 
-.ingredients-grid,
-.beer-grid,
-.brewery-stats {
+.beer-grid {
   perspective: 1200px;
 }
 
@@ -66,19 +64,18 @@ a {
 }
 
 .product-can-stage,
-.showcase-can,
-.transition-can,
-.lineup-can-shell {
+.lineup-can-shell,
+.final-can-frame {
   will-change: transform;
 }
 
 .premium-reveal,
-.brewery-stat,
-.ingredient-card,
 .beer-card,
 .cta-reveal,
-.showcase-can,
-.transition-can {
+.journey-scene,
+.journey-spec,
+.journey-callout,
+.final-can-frame {
   opacity: 0;
 }
 
@@ -94,11 +91,6 @@ a {
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 3px 3px;
   mix-blend-mode: overlay;
-}
-
-.bonsai-line {
-  stroke-dasharray: 1260;
-  stroke-dashoffset: 1260;
 }
 
 .ambient-orchard {
@@ -124,14 +116,19 @@ a {
 
   .section-reveal,
   .premium-reveal,
-  .brewery-stat,
-  .ingredient-card,
   .beer-card,
   .cta-reveal,
-  .showcase-can,
-  .transition-can {
+  .journey-scene,
+  .journey-spec,
+  .journey-callout,
+  .final-can-frame {
     opacity: 1;
     transform: none;
     filter: none;
+  }
+
+  .journey-scene {
+    position: static;
+    margin-bottom: 2rem;
   }
 }
