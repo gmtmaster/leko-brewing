@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type BeerCanProps = {
   scale?: number;
+  labelSrc?: string;
 };
 
 const LABEL_TEXTURE_ROTATION = 0.85;
@@ -125,9 +126,12 @@ function buildLabelBandGeometry(sourceGeometry: THREE.BufferGeometry) {
 }
 
 
-function BeerCan({ scale = 1 }: BeerCanProps) {
+function BeerCan({
+  scale = 1,
+  labelSrc = "/textures/golden-hour-label.png",
+}: BeerCanProps) {
   const gltf = useGLTF("/models/beer-can.glb");
-  const labelTexture = useTexture("/textures/golden-hour-label.png");
+  const labelTexture = useTexture(labelSrc);
 
   useEffect(() => {
     labelTexture.colorSpace = THREE.SRGBColorSpace;
@@ -313,27 +317,27 @@ function SceneContent() {
       <pointLight position={[4, -1.4, -3]} color="#6f8b5a" intensity={2.4} distance={12} />
 
       <group ref={mainCan} position={[0.58, -0.02, 0]} rotation={[0.06, 0.06, 0]}>
-        <BeerCan />
+        <BeerCan labelSrc="/textures/daylight_haze.png"/>
       </group>
 
       <Float speed={0.9} rotationIntensity={0.22} floatIntensity={0.45}>
         <group position={[-3.2, 0.88, -2.7]} rotation={[0.12, 0.7, -0.1]}>
-          <BeerCan scale={0.43} />
+          <BeerCan scale={0.43} labelSrc="/textures/sweet_illusion.png"/>
         </group>
       </Float>
       <Float speed={1.15} rotationIntensity={0.28} floatIntensity={0.55}>
         <group position={[3.16, 1.08, -3.2]} rotation={[-0.14, -0.7, 0.14]}>
-          <BeerCan scale={0.37} />
+          <BeerCan scale={0.37} labelSrc="/textures/daylight_haze.png"/>
         </group>
       </Float>
       <Float speed={0.98} rotationIntensity={0.22} floatIntensity={0.48}>
         <group position={[2.75, -1.45, -2.15]} rotation={[0.08, -1.04, -0.1]}>
-          <BeerCan scale={0.31} />
+          <BeerCan scale={0.31} labelSrc="/textures/sweet_illusion.png"/>
         </group>
       </Float>
       <Float speed={1.05} rotationIntensity={0.22} floatIntensity={0.42}>
         <group position={[-2.55, -1.55, -3.1]} rotation={[-0.08, 0.44, 0.09]}>
-          <BeerCan scale={0.28} />
+          <BeerCan scale={0.28} labelSrc="/textures/daylight_haze.png"/>
         </group>
       </Float>
 

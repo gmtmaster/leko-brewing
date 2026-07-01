@@ -6,7 +6,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 type ProductCanCanvasProps = {
-  className?: string;
+  labelSrc?: string;
   cameraZ?: number;
   cameraY?: number;
   fov?: number;
@@ -14,6 +14,12 @@ type ProductCanCanvasProps = {
   position?: [number, number, number];
   rotation?: [number, number, number];
   idleSpeed?: number;
+};
+
+type ProductCanProps = Pick<
+  ProductCanCanvasProps,
+  "labelSrc" | "scale" | "position" | "rotation" | "idleSpeed"
+> & {
   reducedMotion?: boolean;
 };
 
@@ -128,15 +134,16 @@ function buildLabelBandGeometry(sourceGeometry: THREE.BufferGeometry) {
 }
 
 function ProductCan({
+  labelSrc = "/textures/golden-hour-label.png",
   scale = 1,
   position = [0, 0, 0],
   rotation = [0.04, Math.PI, 0],
   idleSpeed = 0.18,
-  reducedMotion = false
-}: Omit<ProductCanCanvasProps, "className" | "cameraZ" | "cameraY" | "fov">) {
+  reducedMotion = false,
+}: ProductCanProps) {
   const group = useRef<THREE.Group>(null);
   const gltf = useGLTF("/models/beer-can.glb");
-  const labelTexture = useTexture("/textures/golden-hour-label.png");
+  const labelTexture = useTexture(labelSrc);
 
   useEffect(() => {
     labelTexture.colorSpace = THREE.SRGBColorSpace;
@@ -199,15 +206,14 @@ function ProductCan({
 }
 
 export function ProductCanCanvas({
-  className = "",
-  cameraZ = 5.4,
-  cameraY = 0.18,
-  fov = 31,
-  scale = 1,
-  position,
-  rotation,
-  idleSpeed,
-  reducedMotion
+  labelSrc = "/textures/golden-hour-label.png",
+  cameraZ = 6.2,
+  cameraY = 0.62,
+  fov = 26,
+  scale = 0.72,
+  position = [0, -0.38, 0],
+  rotation = [0.02, Math.PI * 0.94, 0],
+  idleSpeed = 0.12,
 }: ProductCanCanvasProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -221,7 +227,6 @@ export function ProductCanCanvas({
 
   return (
     <Canvas
-      className={className}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       camera={{ position: [0, cameraY, cameraZ], fov }}
@@ -237,11 +242,12 @@ export function ProductCanCanvas({
       <pointLight position={[3, -1.6, -2.2]} intensity={1.7} color="#67e8f9" />
       <Suspense fallback={null}>
         <ProductCan
+          labelSrc={labelSrc}
           scale={scale}
           position={position}
           rotation={rotation}
           idleSpeed={idleSpeed}
-          reducedMotion={reducedMotion || prefersReducedMotion}
+          reducedMotion={prefersReducedMotion}
         />
         <Environment preset="city" />
       </Suspense>
@@ -250,4 +256,9 @@ export function ProductCanCanvas({
 }
 
 useGLTF.preload("/models/beer-can.glb");
+useTexture.preload("/textures/daylight-haze-label.png");
 useTexture.preload("/textures/golden-hour-label.png");
+useTexture.preload("/textures/luna-blanca-label.png");
+useTexture.preload("/textures/west-coast-ipa-label.png");
+useTexture.preload("/textures/daylight_haze.png");
+useTexture.preload("/textures/sweet_illusion.png");
