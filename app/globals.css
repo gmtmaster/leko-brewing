@@ -47,12 +47,12 @@ a {
 
 .split-word {
   display: inline-block;
-  transform: translateY(115%);
+  transform: none;
 }
 
 .section-reveal {
-  opacity: 0;
-  transform: translateY(48px);
+  opacity: 1;
+  transform: none;
 }
 
 .beer-grid {
@@ -76,7 +76,7 @@ a {
 .journey-spec,
 .journey-callout,
 .final-can-frame {
-  opacity: 0;
+  opacity: 1;
 }
 
 .cinematic-grain::after {
